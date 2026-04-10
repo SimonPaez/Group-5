@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cardboard Ice Cream Maker - Introduction</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(180deg, #fff7f0, #ffe9f1);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .topbar {
+      background: #ff7aa2;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    .menu-toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 26px;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    .menu {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .menu.show {
+      display: flex;
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .menu a:hover {
+      opacity: 0.8;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1150px;
+      margin: auto;
+      padding: 40px 0 60px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 35px;
+      background: rgba(255,255,255,0.75);
+      padding: 35px 20px;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .hero h1 {
+      color: #ff4f81;
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      max-width: 800px;
+      margin: auto;
+      font-size: 1.05rem;
+    }
+
+    .section-title {
+      text-align: center;
+      color: #ff4f81;
+      font-size: 2rem;
+      margin: 35px 0 20px;
+    }
+
+    .title-box {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    .title-box h2 {
+      color: #ff4f81;
+      margin-bottom: 8px;
+    }
+
+    .members-wrap {
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+
+    .member-box {
+      background: white;
+      padding: 16px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+      font-weight: bold;
+    }
+
+    .alt-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      align-items: center;
+      background: rgba(255,255,255,0.85);
+      border-radius: 22px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    }
+
+    .alt-row:nth-child(even) .alt-text {
+      order: 2;
+    }
+
+    .alt-row:nth-child(even) .alt-visual {
+      order: 1;
+    }
+
+    .alt-text h3 {
+      color: #ff4f81;
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+    }
+
+    .alt-visual {
+      min-height: 180px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ffd5e4, #fff0b8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      font-weight: bold;
+      color: #7a4455;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      background: #ff7aa2;
+      color: white;
+      text-align: center;
+      padding: 16px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .alt-row {
+        grid-template-columns: 1fr;
+      }
+
+      .alt-row:nth-child(even) .alt-text,
+      .alt-row:nth-child(even) .alt-visual {
+        order: unset;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="22" r="12" fill="#ff9ec2"/>
+          <path d="M26 34h12l-4 18h-4z" fill="#c8894d"/>
+        </svg>
+      </div>
+      <span>Group-6 Cardboard Ice Cream Maker</span>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu(this)">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="menu" id="menu">
+      <a href="index.html">Introduction</a>
+      <a href="page1.html">Solution</a>
+      <a href="page2.html">Results Data</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="hero">
+      <h1>Cardboard Ice Cream Maker</h1>
+      <p>
+        A simple and creative prototype for Family and Consumer Science that helps
+        families and communities learn how ice cream can be made using affordable
+        materials and a manual process.
+      </p>
+    </section>
+    <div class="title-box">
+      <h2>Prototype: Cardboard Ice Cream Maker</h2>
+      <p>Focus Area: Family and Consumer Science (FCS)</p>
+    </div>
+
+    <h2 class="section-title">Group Members</h2>
+    <div class="members-wrap">
+      <div class="member-box">Hannah Tolentino</div>
+      <div class="member-box">Althea Paras</div>
+      <div class="member-box">Bobryan Macalbe</div>
+      <div class="member-box">Ace Tionson</div>
+    </div>
+
+    <h2 class="section-title">Introduction</h2>
+
+    <div class="alt-row">
+      <div class="alt-text">
+        <h3>Focus Area and Target Users</h3>
+        <p>
+          Our TLE focus area is all about FCS (Family Consumer Science). The target
+          audience of this prototype is families and communities who want a simple
+          and practical way to learn about making ice cream.
+        </p>
+      </div>
+      <div class="alt-visual">Families & Communities</div>
+    </div>
+
+    <div class="alt-row">
+      <div class="alt-text">
+        <h3>Why We Chose This Prototype</h3>
+        <p>
+          We chose this kind of prototype because many people cannot afford an ice
+          cream maker machine. Some ice cream makers also use electricity, which
+          may not always be available or practical in some places. We wanted to
+          design a prototype that can work manually even without electricity.
+        </p>
+      </div>
+      <div class="alt-visual">Affordable and Manual Design</div>
+    </div>
+
+    <div class="alt-row">
+      <div class="alt-text">
+        <h3>Purpose and Importance</h3>
+        <p>
+          The purpose of this prototype is to demonstrate the basic process of
+          making ice cream through a simple freezing method using ice and salt while
+          mixing the ingredients. It is useful as a learning tool in school
+          activities and experiments, and it can also bring people together for a
+          fun and enjoyable bonding experience.
+        </p>
+      </div>
+      <div class="alt-visual">Learning + Fun + Bonding</div>
+    </div>
+  </div>
+
+  <footer>
+    Cardboard Ice Cream Maker Prototype | Introduction Page
+  </footer>
+
+  <script>
+    function toggleMenu(button) {
+      button.classList.toggle("active");
+      document.getElementById("menu").classList.toggle("show");
+    }
+  </script>
+
+</body>
+</html>
